@@ -2,7 +2,7 @@ import { Component, useEffect, useState } from 'react'
 import { View, Text, Video } from '@tarojs/components'
 
 import './video.less'
-import { getIndex } from '../../store/http';
+import { callIndex, getIndex } from '../../store/http';
 import { AtSearchBar } from 'taro-ui';
 
 import "taro-ui/dist/style/components/search-bar.scss";
@@ -26,7 +26,7 @@ const formatResult = (res)=>{
 const VideoPage = ()=>{
   const [searchValue,setSearchValue] = useState('');
 
-  const { list, loading , query } = useQuery(getIndex,{ formatResult, initSearch : true })
+  const { list, loading , query } = useQuery(callIndex,{ formatResult, initSearch : true })
 
   console.log(list);
 
@@ -41,7 +41,7 @@ const VideoPage = ()=>{
       <HomeBox title='电影' data={list.dy}/>
       <HomeBox title='动漫' data={list.dm}/>
       <HomeBox title='综艺' data={list.zy}/>
-      <Video
+      {/* <Video
           id='video'
           src='https://vod3.buycar5.cn/20210411/scFsjz8s/index.m3u8'
           poster='https://misc.aotu.io/booxood/mobile-video/cover_900x500.jpg'
@@ -51,7 +51,7 @@ const VideoPage = ()=>{
           loop={false}
           showCastingButton
           muted={false}
-        />
+        /> */}
     </View>
   );
 };

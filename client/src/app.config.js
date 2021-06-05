@@ -2,7 +2,7 @@ export default {
   pages: [
     'pages/index/index',
     'pages/video/video',
-    'pages/moviedetail/moviedetail',
+    'pages/video/moviedetail',
   ],
   window: {
     backgroundTextStyle: 'light',

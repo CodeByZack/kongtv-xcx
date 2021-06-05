@@ -20,9 +20,6 @@ export default class Index extends Component {
   render() {
     return (
       <View className="index">
-        <Text>Hello world!</Text>
-        <AtButton type="primary">I need Taro UI</AtButton>
-        <Text>Taro UI 支持 Vue 了吗？</Text>
         <AtButton
           onClick={() => {
             console.log('页面跳');
@@ -31,11 +28,7 @@ export default class Index extends Component {
           type="primary"
           circle={true}
         >
-          支持
-        </AtButton>
-        <Text>共建？</Text>
-        <AtButton type="secondary" circle={true}>
-          来
+          打开视频应用
         </AtButton>
       </View>
     );

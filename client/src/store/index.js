@@ -1,18 +1,15 @@
-import { createContainer } from './unstate-next';
-import { useState, useEffect } from 'react';
-import Taro from '@tarojs/taro';
+import { useState, useEffect } from "react";
+import { createContainer } from "./unstate-next";
 
-const useStore = ()=>{
+const useStore = () => {
+  const [detail, setDetail] = useState(null);
 
-  const [detail,setDetail] = useState(null);
-
-  useEffect(()=>{
-    if(detail){
-
+  useEffect(() => {
+    if (detail) {
     }
-  },[detail]);
+  }, [detail]);
 
-  return {detail,setDetail};
+  return { detail, setDetail };
 };
 
 const store = createContainer(useStore);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useQuery = (request,config)=>{
+export const useQuery = (request, config) => {
   const { initParam, formatResult, initSearch } = config;
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,13 +12,11 @@ export const useQuery = (request,config)=>{
     const result = formatResult ? formatResult(res) : res;
     setList(result || []);
   };
-  
+
   useEffect(() => {
     if (initSearch) {
       query(initParam);
     }
   }, []);
   return { list, loading, query };
-
-
 };

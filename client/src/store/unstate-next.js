@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable*/
+import React from "react";
 
 function createContainer(useHook) {
   const Context = React.createContext(null);
@@ -17,7 +18,7 @@ function createContainer(useHook) {
   function useContainer() {
     const value = React.useContext(Context);
     if (value === null) {
-      throw new Error('Component must be wrapped with <Container.Provider>');
+      throw new Error("Component must be wrapped with <Container.Provider>");
     }
     return value;
   }

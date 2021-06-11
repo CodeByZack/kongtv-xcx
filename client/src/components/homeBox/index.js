@@ -12,7 +12,6 @@ const HomeBox = (props) => {
   const { setDetail } = store.useContainer();
 
   const handleClick = (d) => {
-    console.log(d);
     setDetail(d);
     Taro.navigateTo({
       url: "moviedetail",
@@ -20,21 +19,21 @@ const HomeBox = (props) => {
   };
 
   const jumpCategory = (t) => {
-    console.log("jump", t);
     Taro.navigateTo({
-      url: "moviecategory?type=dsj",
+      url: `moviecategory?type=${t}`,
     });
   };
 
   return (
     <View className="home-box-container">
-      <AtNavBar
-        onClick={() => jumpCategory(title)}
-        onClickLeftIcon={() => jumpCategory(title)}
-        leftText={title}
-        leftIconType="video"
-        rightFirstIconType="chevron-right"
-      />
+      <View onClick={() => jumpCategory(title)}>
+        <AtNavBar
+          onClickLeftIcon={() => jumpCategory(title)}
+          leftText={title}
+          leftIconType="video"
+          rightFirstIconType="chevron-right"
+        />
+      </View>
       <View className="at-row at-row--wrap">
         {(data || []).map((d) => {
           console.log(d);

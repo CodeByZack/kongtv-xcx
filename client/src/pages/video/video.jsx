@@ -1,5 +1,5 @@
-import { View } from "@tarojs/components";
-import { AtSearchBar } from "taro-ui";
+import { View, Swiper, SwiperItem, Image } from "@tarojs/components";
+import { AtSearchBar, AtToast } from "taro-ui";
 import Taro from "@tarojs/taro";
 import HomeBox from "../../components/homeBox";
 import { useQuery } from "../../hook";
@@ -17,11 +17,12 @@ const formatResult = (res) => {
     dsj,
     zy,
     dm,
+    advice: [dy[0], dsj[0], dm[0], zy[0]],
   };
 };
 
 const VideoPage = () => {
-  const { list } = useQuery(Api.getIndex, {
+  const { list, loading } = useQuery(Api.getIndex, {
     formatResult,
     initSearch: true,
   });
@@ -34,24 +35,34 @@ const VideoPage = () => {
     });
   };
 
+  if (loading) {
+    return <AtToast hasMask duration={0} isOpened={loading} status="loading" />;
+  }
+
   return (
     <View className="video">
       <AtSearchBar value="" onActionClick={handleSearch} />
+      <Swiper
+        className="test-h"
+        indicatorColor="#999"
+        indicatorActiveColor="#333"
+        vertical={false}
+        circular
+        indicatorDots
+        autoplay
+      >
+        {(list?.advice || []).map((item) => {
+          return (
+            <SwiperItem>
+              <Image mode="scaleToFill" src={item.vod_pic} />
+            </SwiperItem>
+          );
+        })}
+      </Swiper>
       <HomeBox title="影视" data={list.dsj} />
       <HomeBox title="电影" data={list.dy} />
       <HomeBox title="动漫" data={list.dm} />
       <HomeBox title="综艺" data={list.zy} />
-      {/* <Video
-          id='video'
-          src='https://vod3.buycar5.cn/20210411/scFsjz8s/index.m3u8'
-          poster='https://misc.aotu.io/booxood/mobile-video/cover_900x500.jpg'
-          initialTime='0'
-          controls={true}
-          autoplay={false}
-          loop={false}
-          showCastingButton
-          muted={false}
-        /> */}
     </View>
   );
 };

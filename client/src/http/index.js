@@ -1,8 +1,8 @@
-import {
-  getCategory as getCategoryh5,
-  getIndex as getIndexh5,
-  searchMovie as searchMovieh5,
-} from "./h5.request";
+// import {
+//   getCategory as getCategoryh5,
+//   getIndex as getIndexh5,
+//   searchMovie as searchMovieh5,
+// } from "./h5.request";
 import {
   getCategory as getCategoryweapp,
   getIndex as getIndexweapp,
@@ -15,9 +15,9 @@ const env = "weapp";
 let getIndexTmp, getCategoryTmp, searchMovieTmp;
 
 if (env === "h5") {
-  getIndexTmp = getIndexh5;
-  getCategoryTmp = getCategoryh5;
-  searchMovieTmp = searchMovieh5;
+  // getIndexTmp = getIndexh5;
+  // getCategoryTmp = getCategoryh5;
+  // searchMovieTmp = searchMovieh5;
 } else if (env === "weapp") {
   getIndexTmp = getIndexweapp;
   getCategoryTmp = getCategoryweapp;

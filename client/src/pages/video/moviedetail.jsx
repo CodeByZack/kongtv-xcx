@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Video } from "@tarojs/components";
-import { AtButton } from "taro-ui";
-
+import { AtButton, AtTabs, AtTabsPane,AtAccordion } from "taro-ui";
+import Taro from "@tarojs/taro";
 import "./moviedetail.less";
 import store from "../../store";
 import { decodeJuJi } from "../../tools";
@@ -9,18 +9,21 @@ import { decodeJuJi } from "../../tools";
 const Moviedetail = () => {
   const { detail } = store.useContainer();
   const [playUrl, setPlayUrl] = useState("");
-  console.log(detail);
+  const [curTab, setCurTab] = useState(0);
+  const [open,setOpen] = useState(false);
 
   const playSources = decodeJuJi(detail.vod_play_url);
 
-  console.log(playSources);
+  Taro.setNavigationBarTitle({
+    title: detail.vod_name,
+  });
+  const tabList = playSources.map((_, i) => ({ title: `资源${i}` }));
   return (
     <View className="moviedetail">
-      {detail.vod_name}
       <Video
+        className="video-container"
         id="video"
         src={playUrl}
-        poster="https://misc.aotu.io/booxood/mobile-video/cover_900x500.jpg"
         initialTime="0"
         controls
         autoplay={false}
@@ -28,23 +31,36 @@ const Moviedetail = () => {
         showCastingButton
         muted={false}
       />
-      {playSources.map((playSource) => {
-        return (
-          <View>
-            {playSource.map((item) => {
-              return (
-                <AtButton
-                  onClick={() => {
-                    setPlayUrl(item.link);
-                  }}
-                >
-                  {item.text}
-                </AtButton>
-              );
-            })}
-          </View>
-        );
-      })}
+      <AtAccordion
+        open={open}
+        onClick={setOpen}
+        title="简介："
+      >
+        <View className="movie-desc">{detail.vod_content}</View>
+      </AtAccordion>
+      <AtTabs current={curTab} tabList={tabList} onClick={setCurTab}>
+        {playSources.map((playSource, index) => {
+          return (
+            <AtTabsPane current={curTab} index={index}>
+              <View className="at-row at-row--wrap">
+                {(playSource || []).map((item) => {
+                  return (
+                    <View className="at-col at-col-4">
+                      <AtButton
+                        onClick={() => {
+                          setPlayUrl(item.link);
+                        }}
+                      >
+                        {item.text}
+                      </AtButton>
+                    </View>
+                  );
+                })}
+              </View>
+            </AtTabsPane>
+          );
+        })}
+      </AtTabs>
     </View>
   );
 };

@@ -1,7 +1,7 @@
 export default {
   pages: [
-    "pages/index/index",
     "pages/video/video",
+    "pages/index/index",
     "pages/video/moviedetail",
     "pages/video/moviecategory",
     "pages/video/moviesearch",

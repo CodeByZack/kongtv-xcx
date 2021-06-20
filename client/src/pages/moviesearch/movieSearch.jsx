@@ -12,17 +12,13 @@ const MovieSearch = () => {
   const { list, query } = useQuery(Api.searchMovie, {
     initParam: searchValue,
   });
-  const { setDetail } = store.useContainer();
+  const { jumpUtil } = store.useContainer();
 
   const handleSearch = () => {
     query(searchValue);
   };
   const handleClick = (d) => {
-    console.log(d);
-    setDetail(d);
-    Taro.navigateTo({
-      url: "moviedetail",
-    });
+    jumpUtil.jumpToDetail(d);
   };
 
   return (

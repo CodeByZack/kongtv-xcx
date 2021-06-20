@@ -2,9 +2,9 @@ export default {
   pages: [
     "pages/video/video",
     "pages/index/index",
-    "pages/video/moviedetail",
-    "pages/video/moviecategory",
-    "pages/video/moviesearch",
+    "pages/moviedetail/moviedetail",
+    // "pages/moviecategory/moviecategory",
+    "pages/moviesearch/moviesearch",
   ],
   window: {
     backgroundTextStyle: "light",

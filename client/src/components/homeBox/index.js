@@ -9,18 +9,15 @@ import "./index.less";
 const HomeBox = (props) => {
   const { title, data } = props;
 
-  const { setDetail } = store.useContainer();
+  const { jumpUtil } = store.useContainer();
 
   const handleClick = (d) => {
-    setDetail(d);
-    Taro.navigateTo({
-      url: "moviedetail",
-    });
+    jumpUtil.jumpToDetail(d);
   };
 
   const jumpCategory = (t) => {
     Taro.navigateTo({
-      url: `moviecategory?type=${t}`,
+      url: `pages/moviecategory/moviecategory?type=${t}`,
     });
   };
 
@@ -36,7 +33,6 @@ const HomeBox = (props) => {
       </View>
       <View className="at-row at-row--wrap">
         {(data || []).map((d) => {
-          console.log(d);
           return (
             <View className="at-col at-col-4">
               <MovieItem onClick={() => handleClick(d)} {...d} />

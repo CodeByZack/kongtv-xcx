@@ -20,7 +20,6 @@ export const MovieGrid = (props) => {
   return (
     <View className="at-row at-row--wrap">
       {(movies || []).map((d) => {
-        console.log(d);
         return (
           <View className="at-col at-col-4">
             <MovieItem onClick={() => handleClick(d)} {...d} />

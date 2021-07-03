@@ -5,19 +5,17 @@ import { createContainer } from "./unstate-next";
 
 const useStore = () => {
   const home = useHome();
-  const dy = useCategory("dy");
-  const dsj = useCategory("dsj");
-  const dm = useCategory("dm");
-  const zy = useCategory("zy");
+  // const dy = useCategory("dy");
+  // const dsj = useCategory("dsj");
+  // const dm = useCategory("dm");
+  // const zy = useCategory("zy");
+  const category = useCategory();
   const detail = useDetail();
   const searchState = useSearch();
   const jumpUtil = useJumpUtil({ detail, searchState });
   return {
     home,
-    dy,
-    dsj,
-    dm,
-    zy,
+    category,
     detail,
     searchState,
     jumpUtil,
@@ -79,14 +77,16 @@ const useHome = () => {
     loading
   };
 };
-const useCategory = (type) => {
+const useCategory = () => {
   const [page, setPage] = useState(0);
   const [list, setList] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [filterOption, setFilterOption] = useState({});
+  const [type,setType] = useState('dsj');
 
   const getData = async (resetPage) => {
     if (resetPage) {
+      setList([]);
       setIsFetching(true);
       const data = await Api.getCategory({
         type,
@@ -116,12 +116,14 @@ const useCategory = (type) => {
   useEffect(() => {
     getData(true);
     // eslint-disable-next-line
-  }, [filterOption]);
+  }, [filterOption,type]);
 
   return {
     isFetching,
     page,
     list,
+    type,
+    setType,
     getData,
     filterOption,
     setFilterOption,

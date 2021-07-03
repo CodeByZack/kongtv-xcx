@@ -27,6 +27,8 @@ const MovieSearch = () => {
         value={searchValue}
         onChange={setSearchValue}
         onActionClick={handleSearch}
+        onConfirm={handleSearch}
+        showActionButton
       />
       <MovieGrid movies={list} handleClick={handleClick} />
     </View>

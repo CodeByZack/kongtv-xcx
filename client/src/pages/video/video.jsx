@@ -5,7 +5,7 @@ import { useQuery } from "../../hook";
 import Api from "../../http";
 import "./video.less";
 import store from "../../store";
-import MovieHome from "../moviehome";
+import MovieHome from "../moviehome/moviehome";
 import MovieCategory from "../moviecategory/moviecategory";
 
 const tabs = [

@@ -13,27 +13,35 @@ import { MovieGrid } from "../../components/movieItem";
 import "./movieCategory.less";
 
 import store from "../../store";
+import OptionChoose, { typeArr } from "../../components/optionchoose";
 
 const MovieCategory = (props) => {
-  const { type = "dsj", visible } = props;
+  const { visible } = props;
 
-  const { isFetching, list, setFilterOption, filterOption, getData } =
-    store.useContainer()[type];
+  const { category } = store.useContainer();
+
+  const { isFetching, list, setFilterOption, filterOption, getData, type, setType } = category;
   const { jumpUtil } = store.useContainer();
 
   const handleClick = (d) => {
     jumpUtil.jumpToDetail(d);
   };
   useReachBottom(() => {
-    if (!visible) return;
+    // if (!visible) return;
     getData();
     console.log(visible);
     console.log("onReachBottom");
     console.log(type);
   });
 
+  const handleTypeClick = (v)=>{
+    console.log(v);
+    setType(v);
+  };
+
   return (
     <View className="movie-category">
+      <OptionChoose nowChoose={type} optionArr={typeArr} onClick={handleTypeClick}/>
       <MovieGrid movies={list} handleClick={handleClick} />
       {isFetching && <AtLoadMore status="loading" />}
     </View>

@@ -8,7 +8,7 @@ import { decodeJuJi } from "../../tools";
 
 const Moviedetail = () => {
   const { detail } = store.useContainer();
-  const [playUrl, setPlayUrl] = useState("");
+  const [playItem, setPlayItem] = useState({});
   const [curTab, setCurTab] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -16,7 +16,7 @@ const Moviedetail = () => {
   console.log(nowMovie);
   const playSources = decodeJuJi(nowMovie.vod_play_url);
   Taro.setNavigationBarTitle({
-    title: nowMovie.vod_name,
+    title: `${nowMovie.vod_name}/${playItem.text || ''}`,
   });
   const tabList = playSources.map((_, i) => ({ title: `资源${i}` }));
 
@@ -25,13 +25,12 @@ const Moviedetail = () => {
       <Video
         className="video-container"
         id="video"
-        src={playUrl}
+        src={playItem.link}
         initialTime="0"
         controls
-        direction={-90}
+        direction={90}
         show-screen-lock-button
-        enable-auto-rotation
-        autoplay={false}
+        autoplay={true}
         loop={false}
         showCastingButton
         muted={false}
@@ -49,7 +48,7 @@ const Moviedetail = () => {
                     <View className="at-col at-col-4">
                       <AtButton
                         onClick={() => {
-                          setPlayUrl(item.link);
+                          setPlayItem(item);
                         }}
                       >
                         {item.text}

@@ -28,6 +28,9 @@ const Moviedetail = () => {
         src={playUrl}
         initialTime="0"
         controls
+        direction={-90}
+        show-screen-lock-button
+        enable-auto-rotation
         autoplay={false}
         loop={false}
         showCastingButton

@@ -28,7 +28,7 @@ const MovieHome = () => {
         {(swipers || []).map((item) => {
           return (
             <SwiperItem onClick={() => jumpToDetail(item)}>
-              <Image mode="scaleToFill" src={item.vod_pic} />
+              <Image style={{ width : "100%" }} mode="scaleToFill" src={item.vod_pic} />
             </SwiperItem>
           );
         })}

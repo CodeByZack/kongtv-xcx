@@ -1,15 +1,16 @@
-import { useState } from "react";
-import Taro from "@tarojs/taro";
-import { AtSearchBar } from "taro-ui";
-import { View } from "@tarojs/components";
-import Api from "../../http";
-import { useQuery } from "../../hook";
-import { MovieGrid } from "../../components/movieItem";
-import store from "../../store";
+import { useState } from 'react';
+import Taro from '@tarojs/taro';
+import { AtSearchBar, AtActivityIndicator } from 'taro-ui';
+import { View } from '@tarojs/components';
+import Api from '../../http';
+import { useQuery } from '../../hook';
+import { MovieGrid } from '../../components/movieItem';
+import store from '../../store';
+import './movieSearch.less';
 
 const MovieSearch = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const { list, query } = useQuery(Api.searchMovie, {
+  const [searchValue, setSearchValue] = useState('');
+  const { list, query, loading } = useQuery(Api.searchMovie, {
     initParam: searchValue,
   });
   const { jumpUtil } = store.useContainer();
@@ -22,7 +23,7 @@ const MovieSearch = () => {
   };
 
   return (
-    <View>
+    <View className="moviesearch">
       <AtSearchBar
         value={searchValue}
         onChange={setSearchValue}
@@ -30,7 +31,12 @@ const MovieSearch = () => {
         onConfirm={handleSearch}
         showActionButton
       />
-      <MovieGrid movies={list} handleClick={handleClick} />
+
+      {loading ? (
+        <AtActivityIndicator size={50} mode="center" />
+      ) : (
+        <MovieGrid movies={list} handleClick={handleClick} />
+      )}
     </View>
   );
 };

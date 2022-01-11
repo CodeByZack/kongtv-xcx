@@ -11,6 +11,7 @@ export default {
     navigationBarBackgroundColor: "#fff",
     navigationBarTitleText: "风影院",
     navigationBarTextStyle: "black",
+    // navigationStyle: 'custom'
   },
   tabBar: {
     list: [

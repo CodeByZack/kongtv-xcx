@@ -4,14 +4,14 @@ export default {
     // "pages/video/video",
     "pages/moviedetail/moviedetail",
     "pages/moviecategory/moviecategory",
-    "pages/moviesearch/moviesearch",
+    // "pages/moviesearch/moviesearch",
   ],
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
     navigationBarTitleText: "风影院",
     navigationBarTextStyle: "black",
-    // navigationStyle: 'custom'
+    navigationStyle: 'custom'
   },
   tabBar: {
     list: [
@@ -27,12 +27,12 @@ export default {
         pagePath: "pages/moviecategory/moviecategory",
         text: "分类",
       },
-      {
-        // iconPath: "resource/node.png",
-        // selectedIconPath: "resource/node_on.png",
-        pagePath: "pages/moviesearch/moviesearch",
-        text: "搜索",
-      },
+      // {
+      //   // iconPath: "resource/node.png",
+      //   // selectedIconPath: "resource/node_on.png",
+      //   pagePath: "pages/moviesearch/moviesearch",
+      //   text: "搜索",
+      // },
     ],
     color: "#000",
     selectedColor: "#56abe4",

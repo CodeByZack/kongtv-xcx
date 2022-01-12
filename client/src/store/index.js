@@ -1,10 +1,12 @@
-import Taro from "@tarojs/taro";
-import { useState, useEffect } from "react";
-import Api from "../http";
-import { createContainer } from "./unstate-next";
+import Taro from '@tarojs/taro';
+import { useState, useEffect } from 'react';
+import Api from '../http';
+import { createContainer } from './unstate-next';
 
 const useStore = () => {
   const home = useHome();
+  const navBar = useNavBar();
+  console.log(navBar);
   // const dy = useCategory("dy");
   // const dsj = useCategory("dsj");
   // const dm = useCategory("dm");
@@ -15,6 +17,7 @@ const useStore = () => {
   const jumpUtil = useJumpUtil({ detail, searchState });
   return {
     home,
+    navBar,
     category,
     detail,
     searchState,
@@ -26,13 +29,13 @@ const useJumpUtil = ({ detail, searchState }) => {
   const jumpToDetail = (state) => {
     detail.setNowMovie(state);
     Taro.navigateTo({
-      url: "/pages/moviedetail/moviedetail",
+      url: '/pages/moviedetail/moviedetail',
     });
   };
 
   const jumpToSearch = () => {
     Taro.navigateTo({
-      url: "/pages/moviesearch/moviesearch",
+      url: '/pages/moviesearch/moviesearch',
     });
   };
 
@@ -44,7 +47,7 @@ const useJumpUtil = ({ detail, searchState }) => {
   const jumpToHome = (msg) => {
     // eslint-disable-next-line no-console
     console.log(msg);
-    history.push({ pathname: "/" });
+    history.push({ pathname: '/' });
   };
 
   const jumpBack = () => Taro.navigateBack();
@@ -56,7 +59,7 @@ const useHome = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [drawerStatus, setDrawerStatus] = useState(false);
   const [adviceMovieList, setAdviceMovieList] = useState([]);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const getAdviceData = async () => {
     setLoading(true);
     const data = await Api.getIndex();
@@ -74,7 +77,7 @@ const useHome = () => {
     adviceMovieList,
     drawerStatus,
     setDrawerStatus,
-    loading
+    loading,
   };
 };
 const useCategory = () => {
@@ -82,7 +85,7 @@ const useCategory = () => {
   const [list, setList] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [filterOption, setFilterOption] = useState({});
-  const [type,setType] = useState('dsj');
+  const [type, setType] = useState('dsj');
 
   const getData = async (resetPage) => {
     if (resetPage) {
@@ -116,7 +119,7 @@ const useCategory = () => {
   useEffect(() => {
     getData(true);
     // eslint-disable-next-line
-  }, [filterOption,type]);
+  }, [filterOption, type]);
 
   return {
     isFetching,
@@ -164,6 +167,28 @@ const useSearch = () => {
   };
 };
 
+const useNavBar = () => {
+  const menuButtonInfo = Taro.getMenuButtonBoundingClientRect();
+  const systemInfo = Taro.getSystemInfoSync();
+  const navBarHeight =
+    (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 +
+    menuButtonInfo.height +
+    systemInfo.statusBarHeight;
+  const menuRight = systemInfo.screenWidth - menuButtonInfo.right;
+  const menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
+  const menuHeight = menuButtonInfo.height;
+
+  return { navBarHeight, menuRight, menuBotton, menuHeight };
+};
+
 const store = createContainer(useStore);
+
+export const injectStoreProvider = (Comp) => (props) => {
+  return (
+    <store.Provider>
+      <Comp {...props} />
+    </store.Provider>
+  );
+};
 
 export default store;

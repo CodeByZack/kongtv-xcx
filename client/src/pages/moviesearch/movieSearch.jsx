@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import Taro from '@tarojs/taro';
-import { AtSearchBar, AtActivityIndicator } from 'taro-ui';
-import { View } from '@tarojs/components';
+import { AtSearchBar, AtActivityIndicator, AtIcon } from 'taro-ui';
+import { Input, View } from '@tarojs/components';
 import Api from '../../http';
 import { useQuery } from '../../hook';
 import { MovieGrid } from '../../components/movieItem';
 import store from '../../store';
 import './movieSearch.less';
+import { withNavBar } from '../../components/navbar';
 
 const MovieSearch = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -24,13 +25,15 @@ const MovieSearch = () => {
 
   return (
     <View className="moviesearch">
-      <AtSearchBar
-        value={searchValue}
-        onChange={setSearchValue}
-        onActionClick={handleSearch}
-        onConfirm={handleSearch}
-        showActionButton
-      />
+      <View className="search">
+        <Input
+          value={searchValue}
+          onInput={(e) => setSearchValue(e.detail.value)}
+          onConfirm={handleSearch}
+          placeholder="搜索"
+        />
+        <AtIcon value='search' size={18} className='search-icon'/>
+      </View>
 
       {loading ? (
         <AtActivityIndicator size={50} mode="center" />
@@ -41,4 +44,4 @@ const MovieSearch = () => {
   );
 };
 
-export default MovieSearch;
+export default withNavBar(MovieSearch, { title: '搜索', showBack: true });

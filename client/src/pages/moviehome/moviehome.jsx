@@ -1,10 +1,14 @@
-import { View, Swiper, SwiperItem, Image } from "@tarojs/components";
-import HomeBox from "../../components/homeBox";
-import store from "../../store";
+import { View, Swiper, SwiperItem, Image, Input } from '@tarojs/components';
+import { AtIcon, AtSearchBar } from 'taro-ui';
+import HomeBox from '../../components/homeBox';
+import HomeItem from '../../components/homeItem';
+import NavBar, { withNavBar } from '../../components/navbar';
+import store from '../../store';
+import './style.less';
 
 const MovieHome = () => {
   const { home, jumpUtil } = store.useContainer();
-  const { jumpToDetail } = jumpUtil;
+  const { jumpToDetail, jumpToSearch } = jumpUtil;
   const { adviceMovieList: data } = home;
 
   const dy = data.filter((movie) => movie.type_id_1 === 1);
@@ -15,30 +19,19 @@ const MovieHome = () => {
   const swipers = [dy[0], dsj[0], zy[0], dm[0], dy[1]].filter((i) => i);
 
   return (
-    <View>
-      <Swiper
-        style={{ width: "100%" }}
-        indicatorColor="#999"
-        indicatorActiveColor="#333"
-        vertical={false}
-        circular
-        indicatorDots
-        autoplay
-      >
-        {(swipers || []).map((item) => {
-          return (
-            <SwiperItem onClick={() => jumpToDetail(item)}>
-              <Image style={{ width : "100%" }} mode="scaleToFill" src={item.vod_pic} />
-            </SwiperItem>
-          );
-        })}
-      </Swiper>
-      <HomeBox title="影视" data={dsj} />
-      <HomeBox title="电影" data={dy} />
-      <HomeBox title="动漫" data={dm} />
-      <HomeBox title="综艺" data={zy} />
+    <View className="movie-home">
+      <View className="search">
+        <View className="input" onClick={jumpToSearch}>
+          <AtIcon value="search" size="16" customStyle={{ marginRight : 8 }}/>
+          搜索
+        </View>
+      </View>
+      <HomeItem title="影视" data={dsj} />
+      <HomeItem title="电影" data={dy} />
+      <HomeItem title="动漫" data={dm} />
+      <HomeItem title="综艺" data={zy} />
     </View>
   );
 };
 
-export default MovieHome;
+export default withNavBar(MovieHome, { title: '风影院', showBack: false });

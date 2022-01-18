@@ -1,11 +1,17 @@
 import { ScrollView, View, Text } from '@tarojs/components';
 import React from 'react';
-import { noop } from '../../tools';
+import store from '../../store';
 import MovieItem from '../movieItem';
 import './index.less';
 
 const HomeItem = (props) => {
-  const { data, handleClick = noop } = props;
+  const { data } = props;
+  const { jumpUtil } = store.useContainer();
+
+  const handleClick = (d) => {
+    jumpUtil.jumpToDetail(d);
+  };
+
   return (
     <View className="home-item">
       <View className="home-title-wrapper">
